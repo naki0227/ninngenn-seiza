@@ -1,16 +1,36 @@
-# ぺたっと星座（仮）
+# ぺたっと星座！（仮）
 
-iOS 向けの3Dモデルを用いた、2D操作の物理パズルゲームの作業リポジトリです。
+人型の粘着おもちゃを3体投げて星座を作る **iOSゲーム** のリポジトリ。
 
-- **現在の状態**: 開発基盤の初期化。ゲームプレイは未実装。
-- **ゲームの詳細仕様**: `docs/` で検討し、確定後に実装します。
-- **開発環境**: Unity 6.3 LTS / C# を候補として構成しています。必要な Unity Editor の版は `ProjectSettings/ProjectVersion.txt` を参照。
-- **対象**: iOS。ローカルの最終ビルドには macOS、Xcode、Unity iOS Build Support が必要です。
+> 現在は開発基盤のみ。ゲームプレイは未実装です。
 
-## 開発の進め方
+## 現時点の方針
 
-1. Unity Hub から該当バージョンの Unity Editor をインストールし、このディレクトリを開く。
-2. `Assets/` 以下へ Scene、モデル、C# コード、テストを追加する。`Library/`、`Temp/`、`Builds/` はコミットしない。
-3. 変更ごとに Unity EditMode テスト、コンパイル、ビルド検査を行い、GitHub Actions で確認する。
+- **Swift** で開発する。
+- UI は **SwiftUI**、共通のゲームルールは **GameCore（Swift Package）** に置く。
+- **2D / 3D の描画方式は未決定**。最初は2Dプロトタイプを想定するが、SpriteKit / RealityKit は現時点で導入しない。
+- 同じ初期状態と同じ入力系列なら同じ投擲結果になる設計を目指す。
 
-CI の起動条件と初期化時に未検証の項目は `docs/DEVELOPMENT.md` を参照。
+## ブランチ
+
+| ブランチ | 目的 |
+| --- | --- |
+| `main` | CI・共通基盤と、合意後に採用した成果だけ |
+| `asahi-dev` | 朝日くんの独立プロトタイプ |
+| `ibuki-dev` | イブキの独立プロトタイプ |
+| `docs/game-design` | ゲーム企画・未決事項の検討 |
+
+**2人とも同じ `main` を起点に試作し、比較までお互いの実装を統合しない。**
+
+## 開始方法
+
+Mac の Xcode（Swift 6 対応）と [XcodeGen](https://github.com/yonaskolb/XcodeGen) が必要。
+
+```bash
+brew install xcodegen
+xcodegen generate
+open NinngennSeiza.xcodeproj
+bash scripts/quality.sh
+```
+
+詳しい共同開発の手順は **[CONTRIBUTING.md](CONTRIBUTING.md)**、ゲームの共通条件は [docs/PROTOTYPE_BRIEF.md](docs/PROTOTYPE_BRIEF.md)、構成は [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) を参照。

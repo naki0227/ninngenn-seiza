@@ -1,0 +1,31 @@
+name: CI
+
+on:
+  push:
+    branches:
+      - main
+      - asahi-dev
+      - ibuki-dev
+      - docs/game-design
+  pull_request:
+
+jobs:
+  swift-checks:
+    name: Format, Tests, iOS Build
+    runs-on: macos-15
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - name: Swift version
+        run: swift --version
+      - name: Format / lint
+        run: swift format lint --strict --recursive App Packages/GameCore/Sources Packages/GameCore/Tests
+      - name: Unit tests and GameCore compile
+        run: swift test --package-path Packages/GameCore
+      - name: Install project generator
+        run: brew install xcodegen
+      - name: Generate Xcode project
+        run: xcodegen generate
+      - name: Build iOS Simulator app (no signing)
+        run: |
+          xcodebuild -project NinngennSeiza.xcodeproj             -scheme NinngennSeiza             -configuration Debug             -sdk iphonesimulator             -destination 'generic/platform=iOS Simulator'             CODE_SIGNING_ALLOWED=NO build

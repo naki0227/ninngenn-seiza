@@ -1,0 +1,26 @@
+# Xcode and SwiftPM
+.build/
+.swiftpm/
+DerivedData/
+*.xcuserstate
+xcuserdata/
+*.xcworkspace/xcuserdata/
+NinngennSeiza.xcodeproj/
+.DS_Store
+
+# Local files and sensitive credentials
+.env
+.env.*
+!.env.example
+*.p12
+*.mobileprovision
+*.cer
+*.key
+
+# Generated output
+build/
+Build/
+dist/
+coverage/
+*.profraw
+*.profdata
